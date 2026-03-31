@@ -1,5 +1,3 @@
-import { UI } from '../components/UI.js';
-
 export class Game {
   constructor({ mazeClass, playerClass, inventoryClass, uiClass }) {
     this.Maze = mazeClass;
@@ -21,10 +19,9 @@ export class Game {
 
   init() {
     this.loadState();
-    this.ui = new UI(this);
+    this.ui = new this.UI(this);
     this.inventory = new this.Inventory(this);
     this.player = new this.Player(this);
-    this.ui.render();
     this.generate();
     this.bindEvents();
   }

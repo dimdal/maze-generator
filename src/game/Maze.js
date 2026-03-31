@@ -83,11 +83,13 @@ export class Maze {
     while (head < queue.length) {
       const curr = queue[head++];
       if (curr.x === this.w - 1 && curr.y === this.h - 1) {
-        const path = [{ x: this.w - 1, y: this.h - 1 }];
-        let node = visited.get(`${curr.x},${curr.y}`);
-        while (node) {
-          path.unshift({ x: node.x, y: node.y });
-          node = visited.get(`${node.px},${node.py}`);
+        const path = [];
+        let key = `${curr.x},${curr.y}`;
+        while (key) {
+          const [cx, cy] = key.split(',').map(Number);
+          path.unshift({ x: cx, y: cy });
+          const parent = visited.get(key);
+          key = parent ? `${parent.px},${parent.py}` : null;
         }
         this.solution = path;
         return;
@@ -97,7 +99,7 @@ export class Maze {
       for (const n of neighs) {
         const key = `${n.x},${n.y}`;
         if (!visited.has(key)) {
-          visited.set(key, { x: n.x, y: n.y, px: curr.x, py: curr.y });
+          visited.set(key, { px: curr.x, py: curr.y });
           queue.push(n);
         }
       }

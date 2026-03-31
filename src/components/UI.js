@@ -66,7 +66,7 @@ export class UI {
           ? `<img src="/${item.icon}" style="width:40px;height:40px;object-fit:contain;">`
           : `<span style="font-size:2rem">${item.icon}</span>`;
         html += `
-          <div class="inventory-slot" onclick="game.inventory.use(${i}); game.ui.render();">
+          <div class="inventory-slot" data-slot="${i}">
             <span class="item-icon">${icon}</span>
             <span class="item-name">${item.name}</span>
           </div>
@@ -94,6 +94,13 @@ export class UI {
     document.querySelectorAll('input[name="shape"]').forEach(r => {
       r.addEventListener('change', (e) => this.game.setShape(e.target.value));
     });
+
+    document.querySelectorAll('.inventory-slot[data-slot]').forEach(slot => {
+      slot.addEventListener('click', () => {
+        this.game.inventory.use(parseInt(slot.dataset.slot));
+        this.render();
+      });
+    });
   }
 
   showCelebration(score) {
@@ -105,16 +112,20 @@ export class UI {
     ];
     const newItem = lootPool[Math.floor(Math.random() * lootPool.length)];
     const addedItem = this.game.inventory.add(newItem);
+    const lootIcon = newItem.icon.endsWith('.png')
+      ? `<img src="/${newItem.icon}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;">`
+      : newItem.icon;
 
     const overlay = document.createElement('div');
     overlay.className = 'celebration-overlay';
+    // Note: innerHTML used with hardcoded loot pool values only (no user input)
     overlay.innerHTML = `
       <div class="celebration-content">
         <div class="celebration-title">${messages[score.stars]}</div>
         <div class="celebration-stars">${'⭐'.repeat(score.stars)}</div>
         <div>Trekk: ${score.moves}</div>
-        ${addedItem 
-          ? `<div class="celebration-loot">Du fant: <span class="celebration-loot-item">${newItem.icon} ${newItem.name}</span></div>`
+        ${addedItem
+          ? `<div class="celebration-loot">Du fant: <span class="celebration-loot-item">${lootIcon} ${newItem.name}</span></div>`
           : '<div style="margin-top:8px;color:#E84040;">Inventaret er fullt!</div>'}
         <div style="margin-top:12px;font-size:1.2rem;">Nivå ${this.game.currentLevel} fullført!</div>
         <div style="margin-top:8px;">
