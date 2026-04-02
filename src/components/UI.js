@@ -63,7 +63,7 @@ export class UI {
       const item = this.game.inventory.items[i];
       if (item) {
         const icon = item.icon.endsWith('.png') 
-          ? `<img src="/${item.icon}" style="width:40px;height:40px;object-fit:contain;">`
+          ? `<img src="${import.meta.env.BASE_URL}${item.icon}" style="width:40px;height:40px;object-fit:contain;">`
           : `<span style="font-size:2rem">${item.icon}</span>`;
         html += `
           <div class="inventory-slot" data-slot="${i}">
@@ -113,7 +113,7 @@ export class UI {
     const newItem = lootPool[Math.floor(Math.random() * lootPool.length)];
     const addedItem = this.game.inventory.add(newItem);
     const lootIcon = newItem.icon.endsWith('.png')
-      ? `<img src="/${newItem.icon}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;">`
+      ? `<img src="${import.meta.env.BASE_URL}${newItem.icon}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;">`
       : newItem.icon;
 
     const overlay = document.createElement('div');

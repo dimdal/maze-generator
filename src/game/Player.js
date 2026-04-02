@@ -23,6 +23,6 @@ export class Player {
     const px = (this.x + 0.5) * cellSize;
     const py = (this.y + 0.5) * cellSize;
     const size = cellSize * 1.2;
-    return `<image href="/warrior.png" x="${px - size / 2}" y="${py - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+    return `<image href="${import.meta.env.BASE_URL}warrior.png" x="${px - size / 2}" y="${py - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
   }
 }

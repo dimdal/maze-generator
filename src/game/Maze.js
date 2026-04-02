@@ -168,6 +168,6 @@ export class Maze {
     const cx = (this.w - 0.5) * cellSize;
     const cy = (this.h - 0.5) * cellSize;
     const size = cellSize * 1.2;
-    return `<image href="/chestv2.png" x="${cx - size / 2}" y="${cy - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+    return `<image href="${import.meta.env.BASE_URL}chestv2.png" x="${cx - size / 2}" y="${cy - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
   }
 }
